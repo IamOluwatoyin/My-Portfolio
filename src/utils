@@ -1,0 +1,17 @@
+export const Content = [
+  {
+  
+     span: "Frontend Developer",
+  },
+
+  {
+    
+   span: "Building of things that matter",
+  },
+
+  {
+    
+    span: "Problem Solver",
+  },
+];
+
