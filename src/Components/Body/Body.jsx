@@ -47,6 +47,15 @@ const Body = () => {
     },
   ];
 
+  const skillsData = [
+  { name: "ReactJS", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", category: "frontend" },
+  { name: "Tailwind CSS", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg", category: "frontend" },
+  { name: "JavaScript (ES6+)", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png", category: "frontend" },
+  { name: "Git & GitHub", icon: ["https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg", "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"], category: "tools" },
+  { name: "Figma/Design", icon: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg", category: "tools" },
+  { name: "Webpack/Vite", icon: ["https://webpack.js.org/assets/icon-square-big.svg", "https://vitejs.dev/logo.svg"], category: "tools" },
+];
+
   const [textIndex, setIndex] = useState(0);
 
   useEffect(() => {
@@ -63,8 +72,12 @@ const Body = () => {
     formState: { errors },
   } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const submit = async (data) => {
+  const [status, setStatus] = useState("")
+  
+ const submit = async (data) => {
     setIsSubmitting(true);
+    setStatus("Sending...");
+
     try {
       await emailjs.send(
         "service_urshq6v",
@@ -76,12 +89,15 @@ const Body = () => {
           message: data.message,
           time: new Date().toLocaleString(),
         },
-        "P460QdZPZnwVrI4Cw",
+        "P460QdZPZnwVrI4Cw"
       );
+
+      setStatus("Message Sent Successfully!");
       toast.success("Message sent successfully!");
       reset();
     } catch (error) {
       console.error("Error sending email:", error);
+      setStatus("Failed to send message. Please try again later.");
       toast.error("Something went wrong.");
     } finally {
       setIsSubmitting(false);
@@ -101,14 +117,14 @@ const Body = () => {
         <div className="flex items-center pt-[6rem] hidden lg:flex">
           <div className="absolute inset-0 bg-[#FEEAC9] pointer-events-none z-0" />
 
-          {/* White curved background - hide on smaller screens */}
+          
           <div className="absolute inset-y-0 left-0 w-full md:w-[calc(50%+96px)] z-10 pointer-events-none hidden md:block">
             <div className="absolute inset-0 bg-white rounded-r-[500px] rounded-tr-[400px]" />
           </div>
 
-          {/* Content container */}
+          
           <div className="relative z-20 flex flex-col md:flex-row w-full">
-            {/* Text content container */}
+           
             <div
               className="
     w-full md:w-[45%]
@@ -123,7 +139,7 @@ const Body = () => {
   "
             >
               <h2 className="text-3xl md:text-5xl font-bold font-body md:ml-10 text-center md:text-left text-yellow-500">
-                Hi There, I'm
+                Hi there, I'm
               </h2>
               <h1 className="text-5xl md:text-7xl font-bold font-body md:ml-10 text-center md:text-left">
                 Torera <br />
@@ -143,7 +159,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16 md:w-20 md:h-20"
                   href="https://github.com/IamOluwatoyin"
-                  target="_blank"
+                  
                   rel="noopener noreferrer"
                 >
                   <FaGithub />
@@ -151,7 +167,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16 md:w-20 md:h-20"
                   href="https://www.linkedin.com/in/oluwatoyin-solomon-38b6291b3"
-                  target="_blank"
+                  
                   rel="noopener noreferrer"
                 >
                   <FaLinkedinIn />
@@ -159,7 +175,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16 md:w-20 md:h-20"
                   href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  target="_blank"
+                 
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
@@ -184,6 +200,8 @@ const Body = () => {
     contrast-110
     brightness-105
     saturate-105
+    overflow-hidden
+    pointer-events-none
   "
           />
         </div>
@@ -197,10 +215,10 @@ const Body = () => {
           />
 
           {/* Center transparent card */}
-          <div className="absolute inset-0 flex items-end justify-center z-10">
-            <div className="w-screen bg-black/30 backdrop-blur-md p-8 flex flex-col items-center gap-4">
+          <div className="absolute inset-0 flex items-end px-3 justify-center z-10">
+            <div className="w-full bg-black/30 backdrop-blur-md p-8 flex flex-col items-center gap-4">
               <h2 className="text-3xl font-bold font-body text-center text-yellow-500">
-                Hi There, I'm
+                Hi there, I'm
               </h2>
               <h1 className="text-5xl font-bold font-body text-center text-white">
                 Torera <br /> Solomon
@@ -230,7 +248,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://github.com/IamOluwatoyin"
-                  target="_blank"
+                  
                   rel="noopener noreferrer"
                 >
                   <FaGithub />
@@ -238,7 +256,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://www.linkedin.com/in/oluwatoyin-solomon-38b6291b3"
-                  target="_blank"
+                 
                   rel="noopener noreferrer"
                 >
                   <FaLinkedinIn />
@@ -246,7 +264,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  target="_blank"
+                  
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
@@ -264,11 +282,11 @@ const Body = () => {
             className="w-full h-full object-cover object-center contrast-110 brightness-105 saturate-105"
           />
           {/* center card */}
-          <div className="absolute inset-0 flex items-end pb-5 justify-center z-10 ">
+          <div className="absolute inset-0 flex items-end  pb-5 justify-center z-10 ">
             {/* Transparent mobile text card */}
-            <div className="w-screen  bg-black/30 backdrop-blur-md p-8 flex flex-col items-center gap-4">
+            <div className="w-full  bg-black/30 backdrop-blur-md p-8 flex flex-col items-center gap-4">
               <h2 className="text-3xl font-bold font-body text-center text-yellow-500">
-                Hi There, I'm
+                Hi there, I'm
               </h2>
               <h1 className="text-5xl font-bold font-body text-center text-white">
                 Torera <br />
@@ -289,7 +307,7 @@ const Body = () => {
         ${i === textIndex ? "opacity-100" : "opacity-0"}
       `}
                   >
-                    {item.span}
+                    {item.span } 
                   </span>
                 ))}
               </div>
@@ -298,7 +316,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://github.com/IamOluwatoyin"
-                  target="_blank"
+                  
                   rel="noopener noreferrer"
                 >
                   <FaGithub />
@@ -306,7 +324,7 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://www.linkedin.com/in/oluwatoyin-solomon-38b6291b3"
-                  target="_blank"
+                  
                   rel="noopener noreferrer"
                 >
                   <FaLinkedinIn />
@@ -314,7 +332,7 @@ const Body = () => {
                 <a
                   className="account-icon  w-16 h-16"
                   href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  target="_blank"
+                  
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
@@ -328,27 +346,31 @@ const Body = () => {
       <div className="relative z-20">
         <Header />
       </div>
-      <section
-        className="w-full min-h-screen flex flex-col lg:flex-row justify-center gap-20 mt-10"
-        id="about-me"
-        data-aos="fade-right"
-      >
-        <div className="flex flex-col justify-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-body font-bold">
-            With every line of <br /> code, I make the <br /> world a little
-            better !
-          </h1>
+     <section
+  className="w-full min-h-screen flex flex-col lg:flex-row justify-center gap-20 mt-10 px-6 pb-20 md:px-10 lg:px-8 xl:px-10"
+  id="about-me"
+  data-aos="fade-right"
+>
 
-          <p className="text-2xl md:text-1xl mt-10 font-body">
-            As a career shifter from HR to tech, I'm excited to build, learn,
-            <br /> and create digital experiences that make a difference.
-            <br /> My focus is on crafting scalable applications and exploring
-            startup growth,
-            <br /> with a passion for finding creative solutions that simplify
-            and add meaning to people's lives
-          </p>
 
-          <div className="mt-10 flex items-center gap-6">
+        <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
+
+         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-body font-bold leading-snug lg:leading-tight">
+  With every line of <br /> code, I make the <br /> world a little better!
+</h1>
+
+        <p className="text-base sm:text-lg lg:text-xl mt-4 lg:mt-6 font-body leading-snug sm:leading-relaxed lg:leading-relaxed">
+  As a career shifter from HR to tech, I'm excited to build, learn,
+  <br /> and create digital experiences that make a difference.
+  <br /> My focus is on crafting scalable applications and exploring
+  startup growth,
+  <br /> with a passion for finding creative solutions that simplify
+  and add meaning to people's lives
+</p>
+
+
+          <div className="mt-10 flex flex-col sm:flex-row items-center gap-6">
+
             <a
               className="
           bg-green-700 text-white
@@ -393,7 +415,8 @@ const Body = () => {
           </div>
         </div>
 
-        <div className=" w-full lg:w-[40%] mt-10 rounded-xl shadow-lg overflow-hidden">
+        <div className="w-full lg:w-[40%] mt-10 lg:mt-0 rounded-xl shadow-lg overflow-hidden flex justify-center">
+
           <img
             src="/Images/hoodieImage.png"
             alt="techImage"
@@ -407,45 +430,87 @@ const Body = () => {
           />
         </div>
       </section>
+<section
+  id="skills"
+  data-aos="fade-left"
+  className="w-full py-16 px-6 sm:px-10 flex flex-col items-center gap-10 bg-[#FEEAC9]"
+>
+  
+  <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold font-heading text-center">
+    Skills
+  </h1>
+
+ 
+  <p className="max-w-4xl text-base sm:text-lg md:text-xl lg:text-2xl font-body text-center leading-relaxed lg:leading-loose">
+  Here's a look at my skill set. The tech world changes every moment, and
+  that's what makes it exciting. I constantly keep my knowledge up to date
+  and enjoy exploring new technologies to keep growing.
+</p>
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-6">
+  {skillsData.map((skill, index) => (
+    <div
+      key={index}
+      className="
+        flex
+        flex-col
+        items-center
+        justify-center
+        gap-3
+        p-6
+        rounded-xl
+        bg-white/60
+        backdrop-blur-md
+        shadow-sm
+        hover:shadow-md
+        hover:-translate-y-1
+        transition-all
+        duration-300
+      "
+    >
+      {/* Icon(s) */}
+      <div className="flex items-center gap-3">
+        {Array.isArray(skill.icon) ? (
+          skill.icon.map((iconSrc, i) => (
+            <img
+              key={i}
+              src={iconSrc}
+              alt={`${skill.name} icon`}
+              className="w-10 h-10 object-contain"
+            />
+          ))
+        ) : (
+          <img
+            src={skill.icon}
+            alt={`${skill.name} icon`}
+            className="w-12 h-12 object-contain"
+          />
+        )}
+      </div>
+
+      {/* Skill name */}
+      <p className="text-sm sm:text-base font-body font-semibold text-center">
+        {skill.name}
+      </p>
+    </div>
+  ))}
+</div>
+
+</section>
 
       <section
-        className="w-full min-h-maxcontent  p-10  flex flex-col items-center justify-center gap-20 mt-10  bg-[#FEEAC9]"
-        id="skills"
-        data-aos="fade-left"
-      >
-        <h1 className="text-7xl font-bold font-heading mt-10">Skills</h1>
-        <p className="text-3xl font-body ">
-          Here's a look at my skill set. The tech world changes every moment{" "}
-          <br />
-          and that's what makes it exciting! I constantly keep my knowledge{" "}
-          <br />
-          up to date and love exploring new technologies to keep growing.
-        </p>
-        <ul className="flex flex-wrap justify-center gap-10">
-          <li className="skill-list font-body font-semibold">HTML/CSS</li>
-          <li className="skill-list font-body font-semibold">Javascript</li>
-          <li className="skill-list font-body font-semibold">Tailwind css</li>
-          <li className="skill-list font-body font-semibold">React.js</li>
-          <li className="skill-list font-body font-semibold">Typescript</li>
-          <li className="skill-list font-body font-semibold">Figma/Design</li>
-        </ul>
-      </section>
-
-      <section
-        className="bg-white w-screen flex flex-col items-center p-10 gap-10"
+        className="bg-white w-full flex flex-col items-center p-10 gap-10 overflow-x-hidden"
         id="projects"
         data-aos="fade-up"
       >
-        <h1 className="text-5xl font-heading font-bold">
-          What have I created?
-        </h1>
-        <p className="text-2xl font-body">
-          Creating isn't just part of my work , it's part of my life. I've
-          always tried to keep that <br /> spark of building alive and never
-          lose the joy of bringing ideas to life. Here you can <br /> explore
-          the projects I've built with a team of collaborators who shared my
-          vision and passion.
-        </p>
+        <h1 className="text-5xl font-heading font-bold text-center lg:text-left">
+  What have I created?
+</h1>
+
+<p className="text-base lg:text-xl font-body text-center leading-relaxed max-w-full lg:max-w-none">
+  Creating isn't just part of my work, it's part of my life. I've always tried
+  to keep that <br /> spark of building alive and never lose the joy of bringing ideas to life. Here you can <br /> explore the projects I've built with a team of collaborators who shared my vision and passion.
+</p>
+
 
         <div className="flex flex-col lg:flex-row flex-wrap w-full gap-20 items-center justify-center mt-10">
           {projectCards.map((card, i) => (
@@ -553,105 +618,100 @@ const Body = () => {
         <div className="max-w-7xl mx-auto flex flex-col items-center gap-12">
          
           <div className="text-center">
-            <h1 className="text-5xl font-bold font-heading mb-4">
-              Get in Touch
-            </h1>
-            <p className="text-2xl font-heading">
-              Interested in discussing how my skills can benefit your team?
-              <br /> Reach out via the form or my contact details.
-            </p>
-          </div>
+  <h1 className="text-3xl sm:text-5xl font-bold font-heading mb-2 sm:mb-4">
+    Get in Touch
+  </h1>
+  <p className="text-base sm:text-2xl font-heading leading-snug">
+    Interested in discussing how my skills can benefit your team?
+    <br /> Reach out via the form or my contact details.
+  </p>
+</div>
 
-          <div className="w-full flex flex-col md:flex-row gap-16">
-            <form
-              className="w-full md:w-1/2 bg-white p-8 rounded-xl shadow-lg flex flex-col gap-6 font-body font-semibold"
-              onSubmit={handleSubmit(submit)}
-            >
-              <input
-                type="text"
-                {...register("name", { required: "Name is required" })}
-                placeholder="Your Name"
-                className="border border-gray-300 p-4 rounded-lg focus:outline-none focus:border-yellow-500"
-              />
-              {errors.name && (
-                <p className="text-red-500">{errors.name.message}</p>
-              )}
 
-              <input
-                type="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /\S+@\S+\.\S+/,
-                    message: "Invalid email address",
-                  },
-                })}
-                placeholder="Your Email"
-                className="border border-gray-300 p-4 rounded-lg focus:outline-none focus:border-yellow-500"
-              />
-              {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
-              )}
+          <div className="w-full flex flex-col md:flex-row gap-8 md:gap-16">
+  <form
+    className="w-full md:w-1/2 bg-white p-6 sm:p-8 rounded-xl shadow-lg flex flex-col gap-4 sm:gap-6 font-body font-semibold"
+    onSubmit={handleSubmit(submit)}
+  >
+    <input
+      type="text"
+      {...register("name", { required: "Name is required" })}
+      placeholder="Your Name"
+      className="border border-gray-300 p-3 sm:p-4 rounded-lg focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
+    />
+    {errors.name && (
+      <p className="text-red-500 text-sm sm:text-base">{errors.name.message}</p>
+    )}
 
-              <input
-                type="text"
-                placeholder="Subject"
-                {...register("subject", { required: "Subject is required" })}
-                className="border border-gray-300 p-4 rounded-lg focus:outline-none focus:border-yellow-500"
-                required
-              />
-              {errors.subject && (
-                <p className="text-red-500">{errors.subject.message}</p>
-              )}
+    <input
+      type="email"
+      {...register("email", {
+        required: "Email is required",
+        pattern: {
+          value: /\S+@\S+\.\S+/,
+          message: "Invalid email address",
+        },
+      })}
+      placeholder="Your Email"
+      className="border border-gray-300 p-3 sm:p-4 rounded-lg focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
+    />
+    {errors.email && (
+      <p className="text-red-500 text-sm sm:text-base">{errors.email.message}</p>
+    )}
 
-              <textarea
-                placeholder="Your Message"
-                rows={5}
-                className="border border-gray-300 p-4 rounded-lg resize-none focus:outline-none focus:border-yellow-500"
-                {...register("message", { required: "Message is required" })}
-              />
-              {errors.message && (
-                <p className="text-red-500">{errors.message.message}</p>
-              )}
-              <button
-                type="submit"
-                className="
-            bg-yellow-500 text-white
-            py-4 text-xl font-bold
-            rounded-lg
-            hover:bg-black
-            transition-colors duration-300
-            disabled:opacity-50
-            disabled:cursor-not-allowed 
-          "
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Sending.." : "Contact Me"}
-              </button>
-            </form>
+    <input
+      type="text"
+      placeholder="Subject"
+      {...register("subject", { required: "Subject is required" })}
+      className="border border-gray-300 p-3 sm:p-4 rounded-lg focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
+      required
+    />
+    {errors.subject && (
+      <p className="text-red-500 text-sm sm:text-base">{errors.subject.message}</p>
+    )}
 
-            <div className="w-full md:w-1/2 flex flex-col justify-center gap-8">
-              <p className="text-2xl font-heading">
-                I'm looking forward to exploring potential opportunities and
-                collaborations. Feel free to reach out!
-              </p>
+    <textarea
+      placeholder="Your Message"
+      rows={5}
+      className="border border-gray-300 p-3 sm:p-4 rounded-lg resize-none focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
+      {...register("message", { required: "Message is required" })}
+    />
+    {errors.message && (
+      <p className="text-red-500 text-sm sm:text-base">{errors.message.message}</p>
+    )}
 
-              <ul className="flex flex-col gap-6 font-body">
-                <li className="text-2xl flex items-center gap-4">
-                  <GrMapLocation className="text-yellow-500 text-3xl" />
-                  Lagos, Nigeria
-                </li>
+    <button
+      type="submit"
+      className="bg-yellow-500 text-white py-3 sm:py-4 text-lg sm:text-xl font-bold rounded-lg hover:bg-black transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      disabled={isSubmitting}
+    >
+      {isSubmitting ? "Sending.." : "Contact Me"}
+    </button>
+  </form>
 
-                <li className="text-2xl flex items-center gap-4">
-                  <TbMessages className="text-yellow-500 text-3xl" />
-                  toyinsolomon4@gmail.com
-                </li>
+  <div className="w-full md:w-1/2 flex flex-col justify-center gap-4 sm:gap-8">
+    <p className="text-lg sm:text-2xl font-heading text-center md:text-left">
+      I'm looking forward to exploring potential opportunities and collaborations. Feel free to reach out!
+    </p>
 
-                <li className="text-2xl flex items-center gap-4">
-                  <FcTwoSmartphones className="text-3xl" />
-                  +234 913 630 900
-                </li>
-              </ul>
+    <ul className="flex flex-col gap-4 sm:gap-6 font-body text-center md:text-left">
+      <li className="text-lg sm:text-2xl flex items-center gap-3 sm:gap-4 justify-center md:justify-start">
+        <GrMapLocation className="text-yellow-500 text-2xl sm:text-3xl" />
+        Lagos, Nigeria
+      </li>
+
+      <li className="text-lg sm:text-2xl flex items-center gap-3 sm:gap-4 justify-center md:justify-start">
+        <TbMessages className="text-yellow-500 text-2xl sm:text-3xl" />
+        toyinsolomon4@gmail.com
+      </li>
+
+      <li className="text-lg sm:text-2xl flex items-center gap-3 sm:gap-4 justify-center md:justify-start">
+        <FcTwoSmartphones className="text-2xl sm:text-3xl" />
+        +234 913 630 900
+      </li>
+    </ul>
+  
+
             </div>
           </div>
         </div>

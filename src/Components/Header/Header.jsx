@@ -32,10 +32,15 @@ const Header = () => {
   },[])
   const [menuOpen, setMenuOpen] = useState(false);
   return (
-   <div className={`w-full h-30 flex items-center justify-center z-50 fixed top-0 ${scrolled ? "bg-white shadow-2xl" : "bg-transparent shadow-none"} transition-all duration-300`}>
+   <div
+  className={`w-full h-16 sm:h-20 md:h-24 lg:h-24 flex items-center justify-center z-50 fixed top-0 ${
+    scrolled ? "bg-white shadow-2xl" : "bg-transparent shadow-none"
+  } transition-all duration-300`}
+>
+
   <div className="w-[80%] h-20 flex items-center justify-between">
     
-    {/* Logo on the left */}
+   
     <h1 className="text-2xl font-bold font-body">
       Torera
       <span className="text-yellow-500 hover:text-yellow-600 font-body transition-colors">
