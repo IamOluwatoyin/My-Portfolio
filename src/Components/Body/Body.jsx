@@ -7,7 +7,9 @@ import { FcTwoSmartphones } from "react-icons/fc";
 import { FaArrowRight } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import emailjs from "@emailjs/browser";
-import { toast } from "react-toastify/unstyled";
+import { toast } from "react-toastify";
+import BackToTopButton from "../BackToTopButton"
+
 
 const Body = () => {
   const Content = [
@@ -107,6 +109,8 @@ const Body = () => {
   useEffect(() => {
     emailjs.init("P460QdZPZnwVrI4Cw");
   }, []);
+
+  
   return (
     <>
       <section
@@ -458,7 +462,8 @@ const Body = () => {
         gap-3
         p-6
         rounded-xl
-        bg-white/60
+        bg-white
+        border-2 border-[#D1E0D1]
         backdrop-blur-md
         shadow-sm
         hover:shadow-md
@@ -501,8 +506,7 @@ const Body = () => {
         className="bg-white w-full flex flex-col items-center p-10 gap-10 overflow-x-hidden"
         id="projects"
         data-aos="fade-up"
-      >
-        <h1 className="text-5xl font-heading font-bold text-center lg:text-left">
+      ><h1 className="text-3xl sm:text-5xl font-heading font-bold text-center whitespace-nowrap lg:whitespace-normal lg:text-left">
   What have I created?
 </h1>
 
@@ -716,6 +720,7 @@ const Body = () => {
           </div>
         </div>
       </section>
+      <BackToTopButton/>
     </>
   );
 };
