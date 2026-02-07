@@ -22,11 +22,13 @@ const BackToTopButton = () => {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`
-        fixed bottom-6 right-6 md:hidden z-50 w-12 h-12 flex items-center justify-center
-        bg-green-700 text-white rounded-full shadow-lg hover:bg-yellow-600 transition-transform
-        ${scrollingUp ? "translate-y-0" : "translate-y-20"}
-      `}
+       className={`
+    fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center
+    bg-green-700 text-white rounded-full shadow-lg hover:bg-yellow-600
+    transition-transform
+    flex lg:hidden  
+    ${scrollingUp ? "translate-y-0" : "translate-y-20"}
+  `}
       aria-label="Back to top"
     >
       <FaArrowUp />
@@ -35,3 +37,5 @@ const BackToTopButton = () => {
 };
 
 export default BackToTopButton;
+
+

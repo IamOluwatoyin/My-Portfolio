@@ -235,7 +235,10 @@ const Body = () => {
         absolute
         top-1/2 left-1/2
         -translate-x-1/2 -translate-y-1/2
-        text-yellow-500 font-semibold
+        text-yellow-400 font-semibold
+         bg-black/50 backdrop-blur-md
+         px-4 py-2
+        rounded-xl
         text-3xl md:text-4xl
         whitespace-nowrap
         font-body
@@ -296,7 +299,7 @@ const Body = () => {
                 Torera <br />
                 Solomon
               </h1>
-             <div className="relative flex justify-center items-center h-auto md:h-[4rem] py-2 px-4">
+            <div className="relative h-[5rem] md:h-[4rem] flex justify-center">
   {Content.map((item, i) => (
     <span
       key={i}
@@ -304,18 +307,23 @@ const Body = () => {
         absolute
         top-1/2 left-1/2
         -translate-x-1/2 -translate-y-1/2
-        text-yellow-500 font-semibold font-body
-        text-[clamp(1.2rem,5vw,2.5rem)] md:text-4xl
+        px-4 py-2
+        rounded-xl
+        bg-black/50 backdrop-blur-md
+        text-yellow-400
+        font-semibold font-body
+        text-[clamp(1.1rem,5vw,2.5rem)]
         whitespace-nowrap
-        transition-opacity duration-500
-        ${i === textIndex ? "opacity-100" : "opacity-0"}
+        transition-all duration-500
+        ${i === textIndex
+          ? "opacity-100 scale-105"
+          : "opacity-0 scale-95"}
       `}
     >
       {item.span}
     </span>
   ))}
 </div>
-
 
 
               <div className="flex justify-center gap-8 text-2xl mt-4">
