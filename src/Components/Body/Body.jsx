@@ -170,7 +170,7 @@ const Body = () => {
                 </a>
                 <a
                   className="account-icon w-16 h-16 md:w-20 md:h-20"
-                  href="www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
+                  href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
                   
                   rel="noopener noreferrer"
                 >
@@ -262,7 +262,7 @@ const Body = () => {
                 </a>
                 <a
                   className="account-icon w-16 h-16"
-                  href="www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
+                  href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
                  
                   rel="noopener noreferrer"
                 >
@@ -337,7 +337,7 @@ const Body = () => {
                 </a>
                 <a
                   className="account-icon w-16 h-16"
-                  href="www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
+                  href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
                   
                   rel="noopener noreferrer"
                 >
