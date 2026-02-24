@@ -721,7 +721,7 @@ const Body = () => {
 
       <li className="text-lg sm:text-2xl flex items-center gap-3 sm:gap-4 justify-center md:justify-start">
         <FcTwoSmartphones className="text-2xl sm:text-3xl" />
-        +234 913 630 900
+        +234 913 630 9700
       </li>
     </ul>
   
