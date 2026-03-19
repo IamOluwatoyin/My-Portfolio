@@ -398,7 +398,7 @@ const Body = () => {
           font-body
           font-semibold
         "
-              href="https://drive.google.com/file/d/1VGGYvVz9_MsfoMdCtakruCZ3gg32Co8R/view?usp=sharing"
+              href="https://drive.google.com/file/d/12_gwxKuV8S4jLG185nEjElOTY9ZKxLpz/view?usp=sharing"
               rel="noopener noreferrer"
             >
               View Resume
