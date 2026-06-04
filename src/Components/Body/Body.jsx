@@ -52,6 +52,7 @@ const Body = () => {
       title: "CryptoScope",
       description:
         "A cryptocurrency dashboard that fetches a real-time cryptocurrency data and displays it in a structured UI. It highlights key market insights like top gainers and losers, overall market stats, and a detailed table of coins. It also supports refreshing data for better user experience.",
+        logo:"/Images/crypto-alert-app.png",
       language: ["React.js", "APIs"],
       details: "View Project",
       link: "https://crypto-alert-theta.vercel.app/",
