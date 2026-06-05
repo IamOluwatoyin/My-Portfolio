@@ -734,7 +734,7 @@ const Body = () => {
         +234 913 630 9700
       </li>
     </ul>
-  
+         
 
             </div>
           </div>
@@ -744,5 +744,5 @@ const Body = () => {
     </>
   );
 };
-
+ 
 export default Body;
