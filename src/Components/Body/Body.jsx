@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import { FaGithub, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import { GrMapLocation } from "react-icons/gr";
@@ -13,17 +14,10 @@ import BackToTopButton from "../BackToTopButton"
 
 const Body = () => {
   const Content = [
-    {
-      span: "Frontend Developer",
-    },
-
-    {
-      span: "Building of things that matter",
-    },
-
-    {
-      span: "Problem Solver",
-    },
+    { span: "Frontend Developer" },
+    { span: "Building of things that matter" },
+    { span: "Automation Builder" },
+    { span: "Problem Solver" },
   ];
 
   const projectCards = [
@@ -59,14 +53,38 @@ const Body = () => {
     },
   ];
 
-  const skillsData = [
-  { name: "ReactJS", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", category: "frontend" },
-  { name: "Tailwind CSS", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg", category: "frontend" },
-  { name: "JavaScript (ES6+)", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png", category: "frontend" },
-  { name: "Git & GitHub", icon: ["https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg", "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"], category: "tools" },
-  { name: "Figma/Design", icon: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg", category: "tools" },
-  { name: "Webpack/Vite", icon: ["https://webpack.js.org/assets/icon-square-big.svg", "https://vitejs.dev/logo.svg"], category: "tools" },
-];
+  const skillsData = {
+    frontend: [
+      { name: "React.js", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" },
+      { name: "TypeScript", icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" },
+      { name: "Tailwind CSS", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
+      { name: "JavaScript (ES6+)", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" },
+      { name: "Vite", icon: "https://vitejs.dev/logo.svg" },
+      { name: "TanStack Query", icon: "https://raw.githubusercontent.com/TanStack/query/main/docs/static/mocking/hero.png" },
+      { name: "Axios & APIs", icon: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Axios_logo_%282020%29.svg" },
+      { name: "Git & GitHub", icon: ["https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg", "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"] },
+    ],
+    automation: [
+      { name: "n8n", icon: "https://n8n.io/favicon.ico" },
+      { name: "Zapier", icon: "https://cdn.worldvectorlogo.com/logos/zapier-1.svg" },
+      { name: "Voiceflow", icon: "https://cdn.worldvectorlogo.com/logos/voiceflow.svg" },
+      { name: "Airtable", icon: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Airtable.svg" },
+      { name: "Google Sheets", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Google_Sheets_logo_%282014-2020%29.svg" },
+      { name: "Workflow Design", icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" },
+      { name: "API & Webhooks", icon: "https://cdn-icons-png.flaticon.com/512/2166/2166823.png" },
+      { name: "Conversational AI", icon: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" },
+    ],
+    product: [
+      { name: "Product Management", icon: "https://cdn-icons-png.flaticon.com/512/3135/3135783.png" },
+      { name: "Process Mapping", icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" },
+      { name: "Requirements Gathering", icon: "https://cdn-icons-png.flaticon.com/512/1006/1006363.png" },
+      { name: "User Research", icon: "https://cdn-icons-png.flaticon.com/512/1786/1786414.png" },
+      { name: "Recruitment Ops", icon: "https://cdn-icons-png.flaticon.com/512/3135/3135768.png" },
+      { name: "Stakeholder Coordination", icon: "https://cdn-icons-png.flaticon.com/512/3135/3135779.png" },
+      { name: "Technical Documentation", icon: "https://cdn-icons-png.flaticon.com/512/1006/1006363.png" },
+      { name: "Business Process Improvement", icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" },
+    ],
+  };
 
   const [textIndex, setIndex] = useState(0);
 
@@ -173,7 +191,6 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16 md:w-20 md:h-20"
                   href="https://github.com/IamOluwatoyin"
-                  
                   rel="noopener noreferrer"
                 >
                   <FaGithub />
@@ -181,7 +198,6 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16 md:w-20 md:h-20"
                   href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
-                  
                   rel="noopener noreferrer"
                 >
                   <FaLinkedinIn />
@@ -189,10 +205,25 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16 md:w-20 md:h-20"
                   href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                 
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
+                </a>
+              </div>
+
+              <div className="flex justify-center md:justify-start md:ml-10 gap-4 mt-6">
+                <a
+                  href="#projects"
+                  className="bg-yellow-500 text-white px-6 py-3 rounded-full text-lg font-bold font-body hover:bg-yellow-600 transition-colors duration-300"
+                >
+                  View My Work
+                </a>
+                <a
+                  href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black border-2 border-yellow-500 px-6 py-3 rounded-full text-lg font-bold font-body hover:bg-yellow-500 hover:text-white transition-colors duration-300"
+                >
+                  Download Resume
                 </a>
               </div>
             </div>
@@ -265,7 +296,6 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://github.com/IamOluwatoyin"
-                  
                   rel="noopener noreferrer"
                 >
                   <FaGithub />
@@ -273,7 +303,6 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
-                 
                   rel="noopener noreferrer"
                 >
                   <FaLinkedinIn />
@@ -281,10 +310,25 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
+                </a>
+              </div>
+
+              <div className="flex justify-center gap-4 mt-4">
+                <a
+                  href="#projects"
+                  className="bg-yellow-500 text-white px-5 py-2.5 rounded-full text-base sm:text-lg font-bold font-body hover:bg-yellow-600 transition-colors duration-300"
+                >
+                  View My Work
+                </a>
+                <a
+                  href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black border-2 border-yellow-500 px-5 py-2.5 rounded-full text-base sm:text-lg font-bold font-body hover:bg-yellow-500 hover:text-white transition-colors duration-300"
+                >
+                  Download Resume
                 </a>
               </div>
             </div>
@@ -340,7 +384,6 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://github.com/IamOluwatoyin"
-                  
                   rel="noopener noreferrer"
                 >
                   <FaGithub />
@@ -348,18 +391,32 @@ const Body = () => {
                 <a
                   className="account-icon w-16 h-16"
                   href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
-                  
                   rel="noopener noreferrer"
                 >
                   <FaLinkedinIn />
                 </a>
                 <a
-                  className="account-icon  w-16 h-16"
+                  className="account-icon w-16 h-16"
                   href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
+                </a>
+              </div>
+
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-4 w-full px-2">
+                <a
+                  href="#projects"
+                  className="bg-yellow-500 text-white px-5 py-2.5 rounded-full text-sm sm:text-lg font-bold font-body hover:bg-yellow-600 transition-colors duration-300 text-center"
+                >
+                  View My Work
+                </a>
+                <a
+                  href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black border-2 border-yellow-500 px-5 py-2.5 rounded-full text-sm sm:text-lg font-bold font-body hover:bg-yellow-500 hover:text-white transition-colors duration-300 text-center"
+                >
+                  Download Resume
                 </a>
               </div>
             </div>
@@ -370,7 +427,7 @@ const Body = () => {
       <div className="relative z-20">
         <Header />
       </div>
-     <section
+      <section
   className="w-full min-h-screen flex flex-col lg:flex-row justify-center gap-20 mt-10 px-6 pb-20 md:px-10 lg:px-8 xl:px-10"
   id="about-me"
   data-aos="fade-right"
@@ -384,12 +441,15 @@ const Body = () => {
 </h1>
 
         <p className="text-base sm:text-lg lg:text-xl mt-4 lg:mt-6 font-body leading-snug sm:leading-relaxed lg:leading-relaxed">
-  As a career shifter from HR to tech, I'm excited to build, learn,
-  <br /> and create digital experiences that make a difference.
-  <br /> My focus is on crafting scalable applications and exploring
-  startup growth,
-  <br /> with a passion for finding creative solutions that simplify
-  and add meaning to people's lives
+  With a background in human resources and operations, I understand the
+  <br /> people and processes behind business challenges. I transitioned into
+  <br /> frontend development and automation to build practical solutions that
+  <br /> simplify work, improve service delivery and create better user experiences.
+</p>
+
+<p className="text-base sm:text-lg lg:text-xl mt-4 lg:mt-4 font-body leading-snug sm:leading-relaxed lg:leading-relaxed">
+  Today, I combine React, TypeScript, workflow automation and AI tools to
+  <br /> develop intuitive applications and automate repetitive business processes.
 </p>
 
 
@@ -408,7 +468,7 @@ const Body = () => {
           font-body
           font-semibold
         "
-              href="https://drive.google.com/file/d/1bvyDcJKLNOZgLKFepbE7yntiC-Hkb7kh/view?usp=sharing"
+              href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
               rel="noopener noreferrer"
             >
               View Resume
@@ -461,64 +521,74 @@ const Body = () => {
 >
   
   <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold font-heading text-center">
-    Skills
+    Skills and Tools
   </h1>
 
- 
   <p className="max-w-4xl text-base sm:text-lg md:text-xl lg:text-2xl font-body text-center leading-relaxed lg:leading-loose">
-  Here's a look at my skill set. The tech world changes every moment, and
-  that's what makes it exciting. I constantly keep my knowledge up to date
-  and enjoy exploring new technologies to keep growing.
+  I combine frontend development, workflow automation and product thinking to create practical digital solutions for users and businesses.
 </p>
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-6">
-  {skillsData.map((skill, index) => (
-    <div
-      key={index}
-      className="
-        flex
-        flex-col
-        items-center
-        justify-center
-        gap-3
-        p-6
-        rounded-xl
-        bg-white
-        border-2 border-[#D1E0D1]
-        backdrop-blur-md
-        shadow-sm
-        hover:shadow-md
-        hover:-translate-y-1
-        transition-all
-        duration-300
-      "
-    >
-      {/* Icon(s) */}
-      <div className="flex items-center gap-3">
-        {Array.isArray(skill.icon) ? (
-          skill.icon.map((iconSrc, i) => (
-            <img
-              key={i}
-              src={iconSrc}
-              alt={`${skill.name} icon`}
-              className="w-10 h-10 object-contain"
-            />
-          ))
-        ) : (
-          <img
-            src={skill.icon}
-            alt={`${skill.name} icon`}
-            className="w-12 h-12 object-contain"
-          />
-        )}
-      </div>
 
-      {/* Skill name */}
-      <p className="text-sm sm:text-base font-body font-semibold text-center">
-        {skill.name}
-      </p>
+  {/* Frontend Development */}
+  <div className="w-full max-w-6xl">
+    <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center mb-6 text-yellow-600">
+      Frontend Development
+    </h2>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      {skillsData.frontend.map((skill, index) => (
+        <div
+          key={index}
+          className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-white border-2 border-[#D1E0D1] backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+        >
+          <div className="flex items-center gap-2">
+            {Array.isArray(skill.icon) ? (
+              skill.icon.map((iconSrc, i) => (
+                <img key={i} src={iconSrc} alt={`${skill.name} icon`} className="w-8 h-8 object-contain" />
+              ))
+            ) : (
+              <img src={skill.icon} alt={`${skill.name} icon`} className="w-10 h-10 object-contain" />
+            )}
+          </div>
+          <p className="text-xs sm:text-sm font-body font-semibold text-center">{skill.name}</p>
+        </div>
+      ))}
     </div>
-  ))}
-</div>
+  </div>
+
+  {/* Automation and AI */}
+  <div className="w-full max-w-6xl">
+    <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center mb-6 text-yellow-600">
+      Automation and AI
+    </h2>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      {skillsData.automation.map((skill, index) => (
+        <div
+          key={index}
+          className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-white border-2 border-[#D1E0D1] backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+        >
+          <img src={skill.icon} alt={`${skill.name} icon`} className="w-10 h-10 object-contain" />
+          <p className="text-xs sm:text-sm font-body font-semibold text-center">{skill.name}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Product and Operations */}
+  <div className="w-full max-w-6xl">
+    <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center mb-6 text-yellow-600">
+      Product and Operations
+    </h2>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      {skillsData.product.map((skill, index) => (
+        <div
+          key={index}
+          className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-white border-2 border-[#D1E0D1] backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+        >
+          <img src={skill.icon} alt={`${skill.name} icon`} className="w-10 h-10 object-contain" />
+          <p className="text-xs sm:text-sm font-body font-semibold text-center">{skill.name}</p>
+        </div>
+      ))}
+    </div>
+  </div>
 
 </section>
 
@@ -634,6 +704,85 @@ const Body = () => {
           ))}
         </div>
       </section>
+
+      {/* Automation Projects Section */}
+      <section
+        className="bg-white w-full flex flex-col items-center p-10 gap-10 overflow-x-hidden"
+        id="automations"
+        data-aos="fade-up"
+      >
+        <h1 className="text-3xl sm:text-5xl font-heading font-bold text-center whitespace-nowrap lg:whitespace-normal lg:text-left">
+          Automation Projects
+        </h1>
+
+        <p className="text-base lg:text-xl font-body text-center leading-relaxed max-w-full lg:max-w-none">
+          Beyond frontend development, I build automation solutions that streamline
+          <br /> business processes. Here are some projects that showcase my automation expertise.
+        </p>
+
+        <div className="flex flex-col lg:flex-row flex-wrap w-full gap-10 items-center justify-center mt-10">
+          {/* Card 1: Recruitment Email Automation */}
+          <div className="w-full md:w-[45%] lg:w-[30%] bg-[#FEEAC9] rounded-xl p-6 flex flex-col gap-4 hover:shadow-lg transition-all duration-300">
+            <h2 className="text-yellow-600 text-2xl font-heading font-bold">
+              Recruitment Email Automation
+            </h2>
+            <p className="text-sm font-body font-semibold text-gray-600">
+              Built with: n8n
+            </p>
+            <p className="font-body leading-relaxed">
+              Automates the recruitment email workflow by sending personalized
+              follow-ups and screening responses to candidates based on application status.
+            </p>
+            <Link
+              to="/case-study/recruitment-email-automation"
+              className="text-yellow-500 font-bold font-body hover:text-yellow-600 transition-colors"
+            >
+              View Case Study
+            </Link>
+          </div>
+
+          {/* Card 2: Conference Registration */}
+          <div className="w-full md:w-[45%] lg:w-[30%] bg-[#FEEAC9] rounded-xl p-6 flex flex-col gap-4 hover:shadow-lg transition-all duration-300">
+            <h2 className="text-yellow-600 text-2xl font-heading font-bold">
+              Conference Registration and Reminder System
+            </h2>
+            <p className="text-sm font-body font-semibold text-gray-600">
+              Built with: Zapier
+            </p>
+            <p className="font-body leading-relaxed">
+              Automates conference registration workflows and sends timely
+              reminders to attendees, reducing no-shows and improving engagement.
+            </p>
+            <Link
+              to="/case-study/conference-registration"
+              className="text-yellow-500 font-bold font-body hover:text-yellow-600 transition-colors"
+            >
+              View Case Study
+            </Link>
+          </div>
+
+          {/* Card 3: Website FAQ Assistant */}
+          <div className="w-full md:w-[45%] lg:w-[30%] bg-[#FEEAC9] rounded-xl p-6 flex flex-col gap-4 hover:shadow-lg transition-all duration-300">
+            <h2 className="text-yellow-600 text-2xl font-heading font-bold">
+              Website FAQ Assistant
+            </h2>
+            <p className="text-sm font-body font-semibold text-gray-600">
+              Built with: Voiceflow
+            </p>
+            <p className="font-body leading-relaxed">
+              An AI-powered chatbot that answers frequently asked questions
+              on websites, improving user experience and reducing support requests.
+            </p>
+            <Link
+              to="/case-study/website-faq-assistant"
+              className="text-yellow-500 font-bold font-body hover:text-yellow-600 transition-colors"
+            >
+              View Case Study
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section
         className="bg-[#FEEAC9] w-full py-20 px-10"
         id="contact"
