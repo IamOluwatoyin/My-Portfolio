@@ -1,99 +1,144 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../Header/Header";
-import { FaGithub, FaLinkedinIn, FaInstagram } from "react-icons/fa";
+import {
+  FaArrowRight,
+  FaBriefcase,
+  FaCode,
+  FaDatabase,
+  FaEnvelope,
+  FaGithub,
+  FaLinkedinIn,
+  FaRobot,
+} from "react-icons/fa6";
+import { FcTwoSmartphones } from "react-icons/fc";
 import { GrMapLocation } from "react-icons/gr";
 import { TbMessages } from "react-icons/tb";
-import { FcTwoSmartphones } from "react-icons/fc";
-import { FaArrowRight } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
-import BackToTopButton from "../BackToTopButton"
+import Header from "../Header/Header";
+import BackToTopButton from "../BackToTopButton";
 
+const RESUME_URL =
+  "/documents/Oluwatoyin_Olatorera_Solomon_Automation_Engineer_CV.pdf";
+
+const rotatingTitles = [
+  "Automation Engineer",
+  "Frontend Developer",
+  "Workflow Automation Specialist",
+  "Problem Solver",
+];
+
+const frontendProjects = [
+  {
+    title: "RefillXpress",
+    description:
+      "A platform connecting customers to nearby gas refill vendors, with role-based experiences for customers, vendors and riders, live delivery updates and online payments.",
+    image: "/Images/heroImage.png",
+    tools: ["React", "Context API"],
+    link: "https://refill-xpress.vercel.app/",
+  },
+  {
+    title: "Dawn Eats",
+    description:
+      "A breakfast ordering experience for busy professionals, offering flexible delivery and pickup options from local restaurants.",
+    image: "/Images/dawnEats.png",
+    tools: ["React", "Axios", "REST APIs"],
+    link: "https://dawn-eats-break-fast-website.vercel.app/",
+  },
+  {
+    title: "CryptoScope",
+    description:
+      "A responsive cryptocurrency dashboard that presents live market data, gainers, losers and market statistics in a clear interface.",
+    image: "/Images/crypto-alert-app.png",
+    tools: ["React", "REST APIs"],
+    link: "https://crypto-alert-theta.vercel.app/",
+  },
+];
+
+const automationProjects = [
+  {
+    title: "Recruitment Email Automation",
+    tools: "n8n · Email · Conditional logic",
+    description:
+      "Automates candidate communication by sending personalised follow-ups and screening messages based on application status.",
+    route: "/case-study/recruitment-email-automation",
+  },
+  {
+    title: "Conference Registration & Reminder System",
+    tools: "Zapier · Forms · Email reminders",
+    description:
+      "Captures registrations, organises attendee information and sends scheduled reminders to reduce manual coordination and no-shows.",
+    route: "/case-study/conference-registration",
+  },
+  {
+    title: "Website FAQ Assistant",
+    tools: "Voiceflow · Conversational AI",
+    description:
+      "An AI-assisted website chatbot that answers frequent questions and helps visitors find information without waiting for manual support.",
+    route: "/case-study/website-faq-assistant",
+  },
+];
+
+const skillGroups = [
+  {
+    title: "Automation & AI",
+    skills: [
+      "n8n",
+      "Zapier",
+      "Workflow Design",
+      "API & Webhook Integration",
+      "Email Automation",
+      "Voiceflow",
+      "Claude Code",
+      "AI-assisted Workflows",
+    ],
+  },
+  {
+    title: "Frontend Development",
+    skills: [
+      "React",
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vite",
+      "TanStack Query",
+      "Axios",
+      "Responsive UI",
+    ],
+  },
+  {
+    title: "Backend & Integrations",
+    skills: [
+      "Supabase",
+      "PostgreSQL",
+      "REST APIs",
+      "Authentication",
+      "Webhooks",
+      "n8n Cloud",
+      "Vercel",
+      "Git & GitHub",
+    ],
+  },
+  {
+    title: "Product & Operations",
+    skills: [
+      "Process Mapping",
+      "Requirements Gathering",
+      "User Research",
+      "Recruitment Operations",
+      "Stakeholder Coordination",
+      "Technical Documentation",
+      "Business Process Improvement",
+      "Product Thinking",
+    ],
+  },
+];
 
 const Body = () => {
-  const Content = [
-    { span: "Frontend Developer" },
-    { span: "Building of things that matter" },
-    { span: "Automation Builder" },
-    { span: "Problem Solver" },
-  ];
-
-  const projectCards = [
-    {
-      id: 1,
-      title: "RefillXpress",
-      description:
-        " A web app connecting users to nearby gas refill stations with real-time prices, live delivery tracking, and in-app payment. Users can signup as customers, vendors, or riders, enjoying features like vendor price setting, delivery updates, and seamless transactions and all in one platform.",
-      logo: "/Images/heroImage.png",
-      language: ["React", "Context-API"],
-      details: "View Project",
-      link: "https://refill-xpress.vercel.app/",
-    },
-    {
-      id: 2,
-      title: "Dawn Eats",
-      description:
-        "A web app for busy professionals to order breakfast from local restaurants, with flexible options for delivery or pickup. Skip the morning rush and fuel your day.",
-      logo: "/Images/dawnEats.png",
-      language: ["React.js", "Axios", "APIs"],
-      details: "View Project",
-      link: "https://dawn-eats-break-fast-website.vercel.app/",
-    },
-    {
-      id: 3,
-      title: "CryptoScope",
-      description:
-        "A cryptocurrency dashboard that fetches a real-time cryptocurrency data and displays it in a structured UI. It highlights key market insights like top gainers and losers, overall market stats, and a detailed table of coins. It also supports refreshing data for better user experience.",
-        logo:"/Images/crypto-alert-app.png",
-      language: ["React.js", "APIs"],
-      details: "View Project",
-      link: "https://crypto-alert-theta.vercel.app/",
-    },
-  ];
-
-  const skillsData = {
-    frontend: [
-      { name: "React.js", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" },
-      { name: "TypeScript", icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" },
-      { name: "Tailwind CSS", icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
-      { name: "JavaScript (ES6+)", icon: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" },
-      { name: "Vite", icon: "https://vitejs.dev/logo.svg" },
-      { name: "TanStack Query", icon: "https://raw.githubusercontent.com/TanStack/query/main/docs/static/mocking/hero.png" },
-      { name: "Axios & APIs", icon: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Axios_logo_%282020%29.svg" },
-      { name: "Git & GitHub", icon: ["https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg", "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"] },
-    ],
-    automation: [
-      { name: "n8n", icon: "https://n8n.io/favicon.ico" },
-      { name: "Zapier", icon: "https://cdn.worldvectorlogo.com/logos/zapier-1.svg" },
-      { name: "Voiceflow", icon: "https://cdn.worldvectorlogo.com/logos/voiceflow.svg" },
-      { name: "Airtable", icon: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Airtable.svg" },
-      { name: "Google Sheets", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Google_Sheets_logo_%282014-2020%29.svg" },
-      { name: "Workflow Design", icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" },
-      { name: "API & Webhooks", icon: "https://cdn-icons-png.flaticon.com/512/2166/2166823.png" },
-      { name: "Conversational AI", icon: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" },
-    ],
-    product: [
-      { name: "Product Management", icon: "https://cdn-icons-png.flaticon.com/512/3135/3135783.png" },
-      { name: "Process Mapping", icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" },
-      { name: "Requirements Gathering", icon: "https://cdn-icons-png.flaticon.com/512/1006/1006363.png" },
-      { name: "User Research", icon: "https://cdn-icons-png.flaticon.com/512/1786/1786414.png" },
-      { name: "Recruitment Ops", icon: "https://cdn-icons-png.flaticon.com/512/3135/3135768.png" },
-      { name: "Stakeholder Coordination", icon: "https://cdn-icons-png.flaticon.com/512/3135/3135779.png" },
-      { name: "Technical Documentation", icon: "https://cdn-icons-png.flaticon.com/512/1006/1006363.png" },
-      { name: "Business Process Improvement", icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" },
-    ],
-  };
-
-  const [textIndex, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % Content.length);
-    }, 2000);
-    return () => clearInterval(timer);
-  }, []);
+  const [textIndex, setTextIndex] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("");
 
   const {
     register,
@@ -101,28 +146,33 @@ const Body = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState("")
-  
- const submit = async (data) => {
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setTextIndex((current) => (current + 1) % rotatingTitles.length);
+    }, 2400);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    emailjs.init("P460QdZPZnwVrI4Cw");
+  }, []);
+
+  const submit = async (data) => {
     setIsSubmitting(true);
     setStatus("Sending...");
 
     try {
-      await emailjs.send(
-        "service_urshq6v",
-        "template_ru2v9kg",
-        {
-          name: data.name,
-          email: data.email,
-          subject: data.subject,
-          message: data.message,
-          time: new Date().toLocaleString(),
-        },
-        "P460QdZPZnwVrI4Cw"
-      );
+      await emailjs.send("service_urshq6v", "template_ru2v9kg", {
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+        time: new Date().toLocaleString(),
+      });
 
-      setStatus("Message Sent Successfully!");
+      setStatus("Message sent successfully!");
       toast.success("Message sent successfully!");
       reset();
     } catch (error) {
@@ -134,764 +184,428 @@ const Body = () => {
     }
   };
 
-  useEffect(() => {
-    emailjs.init("P460QdZPZnwVrI4Cw");
-  }, []);
-
-  
   return (
     <>
-      <section
-        id="home"
-        data-aos="fade-up"
-        className="relative min-h-screen pt-[5rem]   overflow-hidden"
-      >
-        <div className="flex items-center pt-[6rem] hidden lg:flex">
-          <div className="absolute inset-0 bg-[#FEEAC9] pointer-events-none z-0" />
+      <Header />
 
-          
-          <div className="absolute inset-y-0 left-0 w-full md:w-[calc(50%+96px)] z-10 pointer-events-none hidden md:block">
-            <div className="absolute inset-0 bg-white rounded-r-[500px] rounded-tr-[400px]" />
-          </div>
+      <main>
+        <section id="home" className="relative min-h-[100svh] overflow-hidden bg-[#FEEAC9] pt-16 sm:pt-20">
+          {/* Original curved desktop/tablet hero */}
+          <div className="relative hidden min-h-[calc(100svh-5rem)] items-center md:flex">
+            <div className="absolute inset-y-0 left-0 w-[56%] rounded-r-[45%] bg-white" />
 
-          
-          <div className="relative z-20 flex flex-col md:flex-row w-full">
-           
-            <div
-              className="
-    w-full md:w-[45%]
-    flex flex-col justify-center
-    px-6 md:px-0
-    gap-4 md:gap-6
-    order-2 md:order-1
+            <div className="portfolio-container relative z-20 grid min-h-[calc(100svh-5rem)] grid-cols-[minmax(0,1.3fr)_minmax(0,.85fr)] items-center gap-6 lg:gap-12">
+              <div className="order-2 col-start-2 row-start-1 min-w-0 max-w-xl py-12">
+                <p className="text-2xl font-bold text-yellow-500">Hi there, I’m</p>
+                <h1 className="mt-3 text-5xl font-bold leading-[1.04] tracking-tight lg:text-7xl">
+                  Torera<br />Solomon
+                </h1>
 
-    md:ml-[calc(50%+96px)]
-    xl:pl-[4rem] 
-    
-  "
-            >
-              <h2 className="text-3xl md:text-5xl font-bold font-body md:ml-10 text-center md:text-left text-yellow-500">
-                Hi there, I'm
-              </h2>
-              <h1 className="text-5xl md:text-7xl font-bold font-body md:ml-10 text-center md:text-left">
-                Torera <br />
-                Solomon
-              </h1>
-              <div className="relative h-[2.5rem] md:h-[3rem] flex justify-center md:justify-start md:ml-10">
-                {Content.map((item, i) => (
-                  <span
-                    key={i}
-                    className={`absolute text-3xl md:text-4xl font-semibold font-body transition-opacity duration-500 text-yellow-500 text-center md:text-left ${i === textIndex ? "opacity-100" : "opacity-0"}`}
-                  >
-                    {item.span}
-                  </span>
-                ))}
-              </div>
-              <div className="flex justify-center md:justify-start md:ml-10 gap-8 md:gap-15 text-3xl md:text-4xl mt-4">
-                <a
-                  className="account-icon w-16 h-16 md:w-20 md:h-20"
-                  href="https://github.com/IamOluwatoyin"
-                  rel="noopener noreferrer"
-                >
-                  <FaGithub />
-                </a>
-                <a
-                  className="account-icon w-16 h-16 md:w-20 md:h-20"
-                  href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedinIn />
-                </a>
-                <a
-                  className="account-icon w-16 h-16 md:w-20 md:h-20"
-                  href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-              </div>
-
-              <div className="flex justify-center md:justify-start md:ml-10 gap-4 mt-6">
-                <a
-                  href="#projects"
-                  className="bg-yellow-500 text-white px-6 py-3 rounded-full text-lg font-bold font-body hover:bg-yellow-600 transition-colors duration-300"
-                >
-                  View My Work
-                </a>
-                <a
-                  href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
-                  rel="noopener noreferrer"
-                  className="bg-white text-black border-2 border-yellow-500 px-6 py-3 rounded-full text-lg font-bold font-body hover:bg-yellow-500 hover:text-white transition-colors duration-300"
-                >
-                  Download Resume
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* Hero Image for desktop (1024px and above) */}
-          <img
-            src="/Images/toreraCorporateshot.png"
-            alt="Torera corporate"
-            className="
-    hidden md:block
-    absolute
-    right-[40%] lg:right-[52%]
-    top-[2rem]
-    z-10
-    w-[40rem]
-    max-w-[70%]
-    h-full
-    object-contain
-    contrast-110
-    brightness-105
-    saturate-105
-    overflow-hidden
-    pointer-events-none
-  "
-          />
-        </div>
-        {/* Tablet Hero */}
-        <div className="hidden md:flex lg:hidden relative min-h-screen overflow-hidden">
-          {/* Tablet background image */}
-          <img
-            src="/Images/toreraCorporateshot.png"
-            alt="Torera corporate"
-            className="w-full h-full object-cover object-center contrast-110 brightness-105 saturate-105"
-          />
-
-          {/* Center transparent card */}
-          <div className="absolute inset-0 flex items-end px-3 justify-center z-10">
-            <div className="w-full bg-black/30 backdrop-blur-md p-8 flex flex-col items-center gap-4">
-              <h2 className="text-3xl font-bold font-body text-center text-yellow-500">
-                Hi there, I'm
-              </h2>
-              <h1 className="text-5xl font-bold font-body text-center text-white">
-                Torera <br /> Solomon
-              </h1>
-              <div className="relative h-[5rem] md:h-[4rem] flex justify-center ">
-                {Content.map((item, i) => (
-                  <span
-                    key={i}
-                    className={`
-        absolute
-        top-1/2 left-1/2
-        -translate-x-1/2 -translate-y-1/2
-        text-yellow-400 font-semibold
-         bg-black/50 backdrop-blur-md
-         px-4 py-2
-        rounded-xl
-        text-3xl md:text-4xl
-        whitespace-nowrap
-        font-body
-        transition-opacity duration-500
-        ${i === textIndex ? "opacity-100" : "opacity-0"}
-      `}
-                  >
-                    {item.span}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex justify-center gap-8 text-2xl mt-4">
-                <a
-                  className="account-icon w-16 h-16"
-                  href="https://github.com/IamOluwatoyin"
-                  rel="noopener noreferrer"
-                >
-                  <FaGithub />
-                </a>
-                <a
-                  className="account-icon w-16 h-16"
-                  href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedinIn />
-                </a>
-                <a
-                  className="account-icon w-16 h-16"
-                  href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-              </div>
-
-              <div className="flex justify-center gap-4 mt-4">
-                <a
-                  href="#projects"
-                  className="bg-yellow-500 text-white px-5 py-2.5 rounded-full text-base sm:text-lg font-bold font-body hover:bg-yellow-600 transition-colors duration-300"
-                >
-                  View My Work
-                </a>
-                <a
-                  href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
-                  rel="noopener noreferrer"
-                  className="bg-white text-black border-2 border-yellow-500 px-5 py-2.5 rounded-full text-base sm:text-lg font-bold font-body hover:bg-yellow-500 hover:text-white transition-colors duration-300"
-                >
-                  Download Resume
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="md:hidden relative min-h-screen overflow-hidden">
-          {/* Mobile image */}
-          <img
-            src="/Images/toreraCorporateshot.png"
-            alt="Torera corporate"
-            className="w-full h-full object-cover object-center contrast-110 brightness-105 saturate-105"
-          />
-          {/* center card */}
-          <div className="absolute inset-0 flex items-end  pb-5 justify-center z-10 ">
-            {/* Transparent mobile text card */}
-            <div className="w-full  bg-black/30 backdrop-blur-md p-8 flex flex-col items-center gap-4">
-              <h2 className="text-3xl font-bold font-body text-center text-yellow-500">
-                Hi there, I'm
-              </h2>
-              <h1 className="text-5xl font-bold font-body text-center text-white">
-                Torera <br />
-                Solomon
-              </h1>
-            <div className="relative h-[5rem] md:h-[4rem] flex justify-center">
-  {Content.map((item, i) => (
-    <span
-      key={i}
-      className={`
-        absolute
-        top-1/2 left-1/2
-        -translate-x-1/2 -translate-y-1/2
-        px-4 py-2
-        rounded-xl
-        bg-black/50 backdrop-blur-md
-        text-yellow-400
-        font-semibold font-body
-        text-[clamp(1.1rem,5vw,2.5rem)]
-        whitespace-nowrap
-        transition-all duration-500
-        ${i === textIndex
-          ? "opacity-100 scale-105"
-          : "opacity-0 scale-95"}
-      `}
-    >
-      {item.span}
-    </span>
-  ))}
-</div>
-
-
-              <div className="flex justify-center gap-8 text-2xl mt-4">
-                <a
-                  className="account-icon w-16 h-16"
-                  href="https://github.com/IamOluwatoyin"
-                  rel="noopener noreferrer"
-                >
-                  <FaGithub />
-                </a>
-                <a
-                  className="account-icon w-16 h-16"
-                  href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedinIn />
-                </a>
-                <a
-                  className="account-icon w-16 h-16"
-                  href="https://www.instagram.com/_olatorera?igsh=MXcwNXpxYTNwb3lqcg%3D%3D&utm_source=qr"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-              </div>
-
-              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-4 w-full px-2">
-                <a
-                  href="#projects"
-                  className="bg-yellow-500 text-white px-5 py-2.5 rounded-full text-sm sm:text-lg font-bold font-body hover:bg-yellow-600 transition-colors duration-300 text-center"
-                >
-                  View My Work
-                </a>
-                <a
-                  href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
-                  rel="noopener noreferrer"
-                  className="bg-white text-black border-2 border-yellow-500 px-5 py-2.5 rounded-full text-sm sm:text-lg font-bold font-body hover:bg-yellow-500 hover:text-white transition-colors duration-300 text-center"
-                >
-                  Download Resume
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="relative z-20">
-        <Header />
-      </div>
-      <section
-  className="w-full min-h-screen flex flex-col lg:flex-row justify-center gap-20 mt-10 px-6 pb-20 md:px-10 lg:px-8 xl:px-10"
-  id="about-me"
-  data-aos="fade-right"
->
-
-
-        <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
-
-         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-body font-bold leading-snug lg:leading-tight">
-  With every line of <br /> code, I make the <br /> world a little better!
-</h1>
-
-        <p className="text-base sm:text-lg lg:text-xl mt-4 lg:mt-6 font-body leading-snug sm:leading-relaxed lg:leading-relaxed">
-  With a background in human resources and operations, I understand the
-  <br /> people and processes behind business challenges. I transitioned into
-  <br /> frontend development and automation to build practical solutions that
-  <br /> simplify work, improve service delivery and create better user experiences.
-</p>
-
-<p className="text-base sm:text-lg lg:text-xl mt-4 lg:mt-4 font-body leading-snug sm:leading-relaxed lg:leading-relaxed">
-  Today, I combine React, TypeScript, workflow automation and AI tools to
-  <br /> develop intuitive applications and automate repetitive business processes.
-</p>
-
-
-          <div className="mt-10 flex flex-col sm:flex-row items-center gap-6">
-
-            <a
-              className="
-          bg-green-700 text-white
-          px-6 py-3
-          rounded-full
-          text-xl
-          hover:bg-yellow-500
-          hover:text-white
-          transition-colors
-          duration-300
-          font-body
-          font-semibold
-        "
-              href="https://drive.google.com/file/d/1UCsaRW3h2z5fBWDtUheavdvHFy1dzh3P/view?usp=sharing"
-              rel="noopener noreferrer"
-            >
-              View Resume
-            </a>
-
-            <button
-              className="
-          bg-white text-black
-          px-6 py-3
-          text-xl
-          font-bold
-          rounded-full
-          hover:bg-yellow-500
-          hover:text-white
-          transition-colors
-          duration-300
-          font-body
-         
-        "
-              onClick={() => {
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Hire Me Now
-            </button>
-          </div>
-        </div>
-
-        <div className="w-full lg:w-[40%] mt-10 lg:mt-0 rounded-xl shadow-lg overflow-hidden flex justify-center">
-
-          <img
-            src="/Images/hoodieImage.png"
-            alt="techImage"
-            className="
-        w-full h-full
-        object-cover
-        contrast-110
-        brightness-105
-        saturate-105
-      "
-          />
-        </div>
-      </section>
-<section
-  id="skills"
-  data-aos="fade-left"
-  className="w-full py-16 px-6 sm:px-10 flex flex-col items-center gap-10 bg-[#FEEAC9]"
->
-  
-  <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold font-heading text-center">
-    Skills and Tools
-  </h1>
-
-  <p className="max-w-4xl text-base sm:text-lg md:text-xl lg:text-2xl font-body text-center leading-relaxed lg:leading-loose">
-  I combine frontend development, workflow automation and product thinking to create practical digital solutions for users and businesses.
-</p>
-
-  {/* Frontend Development */}
-  <div className="w-full max-w-6xl">
-    <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center mb-6 text-yellow-600">
-      Frontend Development
-    </h2>
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-      {skillsData.frontend.map((skill, index) => (
-        <div
-          key={index}
-          className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-white border-2 border-[#D1E0D1] backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-        >
-          <div className="flex items-center gap-2">
-            {Array.isArray(skill.icon) ? (
-              skill.icon.map((iconSrc, i) => (
-                <img key={i} src={iconSrc} alt={`${skill.name} icon`} className="w-8 h-8 object-contain" />
-              ))
-            ) : (
-              <img src={skill.icon} alt={`${skill.name} icon`} className="w-10 h-10 object-contain" />
-            )}
-          </div>
-          <p className="text-xs sm:text-sm font-body font-semibold text-center">{skill.name}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  {/* Automation and AI */}
-  <div className="w-full max-w-6xl">
-    <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center mb-6 text-yellow-600">
-      Automation and AI
-    </h2>
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-      {skillsData.automation.map((skill, index) => (
-        <div
-          key={index}
-          className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-white border-2 border-[#D1E0D1] backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-        >
-          <img src={skill.icon} alt={`${skill.name} icon`} className="w-10 h-10 object-contain" />
-          <p className="text-xs sm:text-sm font-body font-semibold text-center">{skill.name}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  {/* Product and Operations */}
-  <div className="w-full max-w-6xl">
-    <h2 className="text-2xl sm:text-3xl font-bold font-heading text-center mb-6 text-yellow-600">
-      Product and Operations
-    </h2>
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-      {skillsData.product.map((skill, index) => (
-        <div
-          key={index}
-          className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-white border-2 border-[#D1E0D1] backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-        >
-          <img src={skill.icon} alt={`${skill.name} icon`} className="w-10 h-10 object-contain" />
-          <p className="text-xs sm:text-sm font-body font-semibold text-center">{skill.name}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-
-</section>
-
-      <section
-        className="bg-white w-full flex flex-col items-center p-10 gap-10 overflow-x-hidden"
-        id="projects"
-        data-aos="fade-up"
-      ><h1 className="text-3xl sm:text-5xl font-heading font-bold text-center whitespace-nowrap lg:whitespace-normal lg:text-left">
-  What have I created?
-</h1>
-
-<p className="text-base lg:text-xl font-body text-center leading-relaxed max-w-full lg:max-w-none">
-  Creating isn't just part of my work, it's part of my life. I've always tried
-  to keep that <br /> spark of building alive and never lose the joy of bringing ideas to life. Here you can <br /> explore the projects I've built with a team of collaborators who shared my vision and passion.
-</p>
-
-
-        <div className="flex flex-col lg:flex-row flex-wrap w-full gap-20 items-center justify-center mt-10">
-          {projectCards.map((card, i) => (
-            <div
-              key={i}
-              className="relative w-full md:w-[45%] lg:w-[27%] group cursor-pointer h-[600px] "
-            >
-              {/* Overlay / plate */}
-              <div
-                className="
-          absolute
-          inset-0
-          bg-yellow-500
-          rounded-xl
-          translate-x-4
-          translate-y-4
-          opacity-0
-          transition-all
-          duration-300
-          group-hover:opacity-100
-          group-hover:translate-x-6
-          group-hover:translate-y-6
-        "
-              />
-
-              {/* Main card */}
-              <div
-                className="
-          relative
-          z-10
-          w-full
-          h-full
-          bg-[#FEEAC9]
-          rounded-xl
-          transition-all
-          duration-300
-          group-hover:-translate-y-4
-          group-hover:-translate-x-2
-          flex  flex-col gap-6 
-        "
-              >
-                <div className="w-full  overflow-hidden flex-shrink-0 top-0">
-                  <img
-                    src={card.logo}
-                    alt={card.title}
-                    className="w-full h-auto object-contain  block"
-                  />
-                </div>
-                <h2 className="text-yellow-500 text-4xl pl-5 font-heading ">
-                  {card.title}
-                </h2>
-                <p className=" pl-5 font-body">{card.description}</p>
-                <div className="flex flex-wrap gap-3 pl-5">
-                  {card.language.map((lang, idx) => (
+                <div className="relative mt-5 h-12 overflow-hidden">
+                  {rotatingTitles.map((title, index) => (
                     <span
-                      key={idx}
-                      className="
-        px-4
-        py-1
-        font-body
-        font-semibold
-        rounded-full
-        bg-yellow-500
-        text-white
-      "
+                      key={title}
+                      className={`absolute inset-y-0 left-0 flex items-center text-2xl font-semibold text-yellow-500 transition-all duration-500 lg:text-3xl ${
+                        index === textIndex
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-4 opacity-0"
+                      }`}
                     >
-                      {lang}
+                      {title}
                     </span>
                   ))}
                 </div>
 
-                <a
-                  href={card.link}
-                  rel="noopener noreferrer"
-                  className="
-    inline-flex
-    items-center
-    gap-2
-    text-yellow-500
-    px-6
-    py-3
-    text-xl
-    font-bold
-    rounded-[3px]
-    hover:text-gray-950
-    transition-colors
-    duration-300
-    font-body
-    
-  "
-                >
-                  {card.details}
-                  <FaArrowRight className="text-2xl" />
+                <p className="mt-4 max-w-lg text-base leading-7 text-slate-700 lg:text-lg">
+                  I build workflow automations and responsive web applications that
+                  reduce repetitive work and turn complex processes into practical
+                  digital experiences.
+                </p>
+
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <a href="#featured-work" className="primary-link">View my work <FaArrowRight /></a>
+                  <a href={RESUME_URL} className="secondary-link">View résumé</a>
+                </div>
+
+                <div className="mt-7 flex gap-3">
+                  <a className="account-icon" href="https://github.com/IamOluwatoyin" aria-label="Oluwatoyin on GitHub"><FaGithub /></a>
+                  <a className="account-icon" href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3" aria-label="Oluwatoyin on LinkedIn"><FaLinkedinIn /></a>
+                  <a className="account-icon" href="mailto:toyinsolomon4@gmail.com" aria-label="Email Oluwatoyin"><FaEnvelope /></a>
+                </div>
+              </div>
+
+              <img
+                src="/Images/toreraCorporateshot.png"
+                alt="Oluwatoyin Olatorera Solomon"
+                className="pointer-events-none order-1 col-start-1 row-start-1 block h-[calc(92svh-5rem)] min-h-[30rem] w-full min-w-0 self-end object-contain object-bottom"
+              />
+            </div>
+          </div>
+
+          {/* Original mobile photograph and glass panel */}
+          <div className="relative min-h-[calc(100svh-4rem)] md:hidden">
+            <img
+              src="/Images/toreraCorporateshot.png"
+              alt="Oluwatoyin Olatorera Solomon"
+              className="absolute inset-0 h-full w-full object-cover object-top"
+            />
+            <div className="absolute inset-x-3 bottom-4 rounded-3xl border border-white/25 bg-black/45 p-5 text-center text-white shadow-2xl backdrop-blur-md sm:inset-x-6 sm:p-7">
+              <p className="text-base font-bold text-yellow-400">Hi there, I’m</p>
+              <h1 className="mt-1 text-4xl font-bold leading-tight">Torera Solomon</h1>
+
+              <div className="relative mx-auto mt-2 h-10 max-w-sm overflow-hidden">
+                {rotatingTitles.map((title, index) => (
+                  <span
+                    key={title}
+                    className={`absolute inset-0 flex items-center justify-center text-lg font-semibold text-yellow-400 transition-all duration-500 ${
+                      index === textIndex ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    {title}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-4 grid gap-2">
+                <a href="#featured-work" className="primary-link w-full">View my work <FaArrowRight /></a>
+                <a href={RESUME_URL} className="secondary-link w-full">View résumé</a>
+              </div>
+
+              <div className="mt-4 flex justify-center gap-3">
+                <a className="account-icon" href="https://github.com/IamOluwatoyin" aria-label="Oluwatoyin on GitHub"><FaGithub /></a>
+                <a className="account-icon" href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3" aria-label="Oluwatoyin on LinkedIn"><FaLinkedinIn /></a>
+                <a className="account-icon" href="mailto:toyinsolomon4@gmail.com" aria-label="Email Oluwatoyin"><FaEnvelope /></a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about-me" className="bg-white py-16 sm:py-20">
+          <div className="portfolio-container grid items-center gap-12 lg:grid-cols-[1.15fr_.85fr]">
+            <div>
+              <p className="section-label">About me</p>
+              <h2 className="section-title max-w-3xl">
+                I connect people, processes and technology.
+              </h2>
+              <div className="mt-6 max-w-3xl space-y-4 text-base leading-8 text-slate-700 sm:text-lg">
+                <p>
+                  My background in human resources and operations taught me how
+                  business problems affect both people and performance. I moved into
+                  technology to build practical solutions to those problems.
+                </p>
+                <p>
+                  Today, I combine frontend development, workflow automation, APIs
+                  and AI tools to create intuitive applications and reduce repetitive
+                  work. I enjoy translating real business needs into systems that are
+                  clear, reliable and easy to use.
+                </p>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href={RESUME_URL} className="primary-link">
+                  View résumé
+                </a>
+                <a href="#contact" className="secondary-link">
+                  Contact me
                 </a>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Automation Projects Section */}
-      <section
-        className="bg-white w-full flex flex-col items-center p-10 gap-10 overflow-x-hidden"
-        id="automations"
-        data-aos="fade-up"
-      >
-        <h1 className="text-3xl sm:text-5xl font-heading font-bold text-center whitespace-nowrap lg:whitespace-normal lg:text-left">
-          Automation Projects
-        </h1>
-
-        <p className="text-base lg:text-xl font-body text-center leading-relaxed max-w-full lg:max-w-none">
-          Beyond frontend development, I build automation solutions that streamline
-          <br /> business processes. Here are some projects that showcase my automation expertise.
-        </p>
-
-        <div className="flex flex-col lg:flex-row flex-wrap w-full gap-10 items-center justify-center mt-10">
-          {/* Card 1: Recruitment Email Automation */}
-          <div className="w-full md:w-[45%] lg:w-[30%] bg-[#FEEAC9] rounded-xl p-6 flex flex-col gap-4 hover:shadow-lg transition-all duration-300">
-            <h2 className="text-yellow-600 text-2xl font-heading font-bold">
-              Recruitment Email Automation
-            </h2>
-            <p className="text-sm font-body font-semibold text-gray-600">
-              Built with: n8n
-            </p>
-            <p className="font-body leading-relaxed">
-              Automates the recruitment email workflow by sending personalized
-              follow-ups and screening responses to candidates based on application status.
-            </p>
-            <Link
-              to="/case-study/recruitment-email-automation"
-              className="text-yellow-500 font-bold font-body hover:text-yellow-600 transition-colors"
-            >
-              View Case Study
-            </Link>
-          </div>
-
-          {/* Card 2: Conference Registration */}
-          <div className="w-full md:w-[45%] lg:w-[30%] bg-[#FEEAC9] rounded-xl p-6 flex flex-col gap-4 hover:shadow-lg transition-all duration-300">
-            <h2 className="text-yellow-600 text-2xl font-heading font-bold">
-              Conference Registration and Reminder System
-            </h2>
-            <p className="text-sm font-body font-semibold text-gray-600">
-              Built with: Zapier
-            </p>
-            <p className="font-body leading-relaxed">
-              Automates conference registration workflows and sends timely
-              reminders to attendees, reducing no-shows and improving engagement.
-            </p>
-            <Link
-              to="/case-study/conference-registration"
-              className="text-yellow-500 font-bold font-body hover:text-yellow-600 transition-colors"
-            >
-              View Case Study
-            </Link>
-          </div>
-
-          {/* Card 3: Website FAQ Assistant */}
-          <div className="w-full md:w-[45%] lg:w-[30%] bg-[#FEEAC9] rounded-xl p-6 flex flex-col gap-4 hover:shadow-lg transition-all duration-300">
-            <h2 className="text-yellow-600 text-2xl font-heading font-bold">
-              Website FAQ Assistant
-            </h2>
-            <p className="text-sm font-body font-semibold text-gray-600">
-              Built with: Voiceflow
-            </p>
-            <p className="font-body leading-relaxed">
-              An AI-powered chatbot that answers frequently asked questions
-              on websites, improving user experience and reducing support requests.
-            </p>
-            <Link
-              to="/case-study/website-faq-assistant"
-              className="text-yellow-500 font-bold font-body hover:text-yellow-600 transition-colors"
-            >
-              View Case Study
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="bg-[#FEEAC9] w-full py-20 px-10"
-        id="contact"
-        data-aos="fade-right"
-      >
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-12">
-         
-          <div className="text-center">
-  <h1 className="text-3xl sm:text-5xl font-bold font-heading mb-2 sm:mb-4">
-    Get in Touch
-  </h1>
-  <p className="text-base sm:text-2xl font-heading leading-snug">
-    Interested in discussing how my skills can benefit your team?
-    <br /> Reach out via the form or my contact details.
-  </p>
-</div>
-
-
-          <div className="w-full flex flex-col md:flex-row gap-8 md:gap-16">
-  <form
-    className="w-full md:w-1/2 bg-white p-6 sm:p-8 rounded-xl shadow-lg flex flex-col gap-4 sm:gap-6 font-body font-semibold"
-    onSubmit={handleSubmit(submit)}
-  >
-    <input
-      type="text"
-      {...register("name", { required: "Name is required" })}
-      placeholder="Your Name"
-      className="border border-gray-300 p-3 sm:p-4 rounded-lg focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
-    />
-    {errors.name && (
-      <p className="text-red-500 text-sm sm:text-base">{errors.name.message}</p>
-    )}
-
-    <input
-      type="email"
-      {...register("email", {
-        required: "Email is required",
-        pattern: {
-          value: /\S+@\S+\.\S+/,
-          message: "Invalid email address",
-        },
-      })}
-      placeholder="Your Email"
-      className="border border-gray-300 p-3 sm:p-4 rounded-lg focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
-    />
-    {errors.email && (
-      <p className="text-red-500 text-sm sm:text-base">{errors.email.message}</p>
-    )}
-
-    <input
-      type="text"
-      placeholder="Subject"
-      {...register("subject", { required: "Subject is required" })}
-      className="border border-gray-300 p-3 sm:p-4 rounded-lg focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
-      required
-    />
-    {errors.subject && (
-      <p className="text-red-500 text-sm sm:text-base">{errors.subject.message}</p>
-    )}
-
-    <textarea
-      placeholder="Your Message"
-      rows={5}
-      className="border border-gray-300 p-3 sm:p-4 rounded-lg resize-none focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
-      {...register("message", { required: "Message is required" })}
-    />
-    {errors.message && (
-      <p className="text-red-500 text-sm sm:text-base">{errors.message.message}</p>
-    )}
-
-    <button
-      type="submit"
-      className="bg-yellow-500 text-white py-3 sm:py-4 text-lg sm:text-xl font-bold rounded-lg hover:bg-black transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-      disabled={isSubmitting}
-    >
-      {isSubmitting ? "Sending.." : "Contact Me"}
-    </button>
-  </form>
-
-  <div className="w-full md:w-1/2 flex flex-col justify-center gap-4 sm:gap-8">
-    <p className="text-lg sm:text-2xl font-heading text-center md:text-left">
-      I'm looking forward to exploring potential opportunities and collaborations. Feel free to reach out!
-    </p>
-
-    <ul className="flex flex-col gap-4 sm:gap-6 font-body text-center md:text-left">
-      <li className="text-lg sm:text-2xl flex items-center gap-3 sm:gap-4 justify-center md:justify-start">
-        <GrMapLocation className="text-yellow-500 text-2xl sm:text-3xl" />
-        Lagos, Nigeria
-      </li>
-
-      <li className="text-lg sm:text-2xl flex items-center gap-3 sm:gap-4 justify-center md:justify-start">
-        <TbMessages className="text-yellow-500 text-2xl sm:text-3xl" />
-        toyinsolomon4@gmail.com
-      </li>
-
-      <li className="text-lg sm:text-2xl flex items-center gap-3 sm:gap-4 justify-center md:justify-start">
-        <FcTwoSmartphones className="text-2xl sm:text-3xl" />
-        +234 913 630 9700
-      </li>
-    </ul>
-         
-
+            <div className="overflow-hidden rounded-3xl bg-[#FEEAC9] shadow-xl">
+              <img
+                src="/Images/hoodieImage.png"
+                alt="Oluwatoyin working in technology"
+                className="aspect-[4/5] w-full object-cover"
+              />
             </div>
           </div>
-        </div>
-      </section>
-      <BackToTopButton/>
+        </section>
+
+        <section id="featured-work" className="bg-[#FEEAC9] py-16 sm:py-20">
+          <div className="portfolio-container">
+            <p className="section-label">Featured project</p>
+            <h2 className="section-title">GrowthLens 360</h2>
+
+            <article className="mt-9 overflow-hidden rounded-3xl border border-yellow-200 bg-[#FFF8E8] shadow-xl transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0_0_#eab308] focus-within:-translate-x-1 focus-within:-translate-y-1 focus-within:shadow-[12px_12px_0_0_#eab308] motion-reduce:transform-none motion-reduce:transition-none">
+              <div className="flex min-w-0 flex-col">
+                <div className="min-w-0 border-b border-yellow-200 bg-[#FEEAC9] p-3 sm:p-6">
+                  <img
+                    src="/Images/growthlens-dashboard.png"
+                    alt="GrowthLens 360 dashboard"
+                    className="block h-auto w-full max-w-full rounded-xl object-contain shadow-lg"
+                  />
+                </div>
+                <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-12">
+                  <span className="w-fit rounded-full bg-green-700 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white">
+                    Full-stack diagnostic and automation platform
+                  </span>
+                  <h3 className="mt-5 text-3xl font-bold sm:text-4xl">
+                    Clear perspectives. Better business decisions.
+                  </h3>
+                  <p className="mt-5 text-base leading-8 text-slate-700 sm:text-lg">
+                    GrowthLens 360 helps small-business owners compare how they view
+                    their business with what customers and employees experience. It
+                    calculates perspective gaps, produces AI-assisted insights,
+                    recommends practical actions and tracks progress.
+                  </p>
+                  <ul className="mt-6 grid gap-3 text-sm font-semibold text-slate-700 sm:grid-cols-2">
+                    <li>• Multi-perspective assessments</li>
+                    <li>• Automated email workflows</li>
+                    <li>• AI-generated business analysis</li>
+                    <li>• Recommendations and action tracking</li>
+                    <li>• In-app notifications</li>
+                    <li>• Secure role-based access</li>
+                  </ul>
+                  <div className="mt-7 flex flex-wrap gap-2">
+                    {["React", "TypeScript", "Supabase", "n8n", "AI", "Vercel"].map((tool) => (
+                      <span key={tool} className="rounded-full bg-yellow-500 px-4 py-2 text-sm font-bold text-white">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <a href="https://growthlens360.vercel.app" className="primary-link">
+                      View live project <FaArrowRight />
+                    </a>
+                    <a href="https://github.com/IamOluwatoyin/Growthlens360" className="secondary-link">
+                      View source <FaGithub />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="automations" className="bg-white py-20 sm:py-24">
+          <div className="portfolio-container">
+            <p className="section-label">Automation case studies</p>
+            <h2 className="section-title">Workflows built around real business needs</h2>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
+              These projects show how I analyse a manual process, map its decisions
+              and build a reliable workflow around the people using it.
+            </p>
+
+            <div className="mt-10 grid gap-6 lg:grid-cols-3">
+              {automationProjects.map((project) => (
+                <article key={project.title} className="flex flex-col rounded-3xl bg-white p-6 shadow-sm transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0_0_#eab308] focus-within:-translate-x-1 focus-within:-translate-y-1 focus-within:shadow-[12px_12px_0_0_#eab308] motion-reduce:transform-none motion-reduce:transition-none sm:p-8">
+                  <p className="text-sm font-bold text-green-700">{project.tools}</p>
+                  <h3 className="mt-4 text-2xl font-bold">{project.title}</h3>
+                  <p className="mt-4 flex-1 leading-7 text-slate-700">{project.description}</p>
+                  <Link to={project.route} className="mt-7 inline-flex items-center gap-2 font-bold text-yellow-600 hover:text-yellow-700">
+                    View case study <FaArrowRight />
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" className="bg-[#FEEAC9] py-20 sm:py-24">
+          <div className="portfolio-container">
+            <p className="section-label">Frontend projects</p>
+            <h2 className="section-title">Responsive products and interfaces</h2>
+
+            <div className="mt-10 grid gap-7 lg:grid-cols-3">
+              {frontendProjects.map((project) => (
+                <article key={project.title} className="flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-[transform,box-shadow] duration-300 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0_0_#eab308] focus-within:-translate-x-1 focus-within:-translate-y-1 focus-within:shadow-[12px_12px_0_0_#eab308] motion-reduce:transform-none motion-reduce:transition-none">
+                  <div className="h-56 w-full overflow-hidden bg-[#FEEAC9] sm:h-64 lg:h-56">
+                    <img src={project.image} alt={`${project.title} interface`} className="h-full w-full object-cover object-top" />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col p-5 sm:p-6">
+                    <h3 className="text-xl font-bold sm:text-2xl">{project.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-slate-700 sm:text-base sm:leading-7">{project.description}</p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {project.tools.map((tool) => (
+                        <span key={tool} className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold text-yellow-800">{tool}</span>
+                      ))}
+                    </div>
+                    <a href={project.link} className="mt-5 inline-flex items-center gap-2 font-bold text-yellow-600 hover:text-yellow-700">
+                      View project <FaArrowRight />
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" className="bg-slate-950 py-20 text-white sm:py-24">
+          <div className="portfolio-container">
+            <p className="section-label !text-yellow-400">Experience</p>
+            <h2 className="section-title !text-white">Where I have applied these skills</h2>
+
+            <div className="mt-10 grid gap-5 lg:grid-cols-2">
+              <article className="rounded-3xl border border-white/15 bg-white/5 p-6 sm:p-8">
+                <p className="text-sm font-bold uppercase tracking-wider text-yellow-400">
+                  July 2026 – Present
+                </p>
+                <h3 className="mt-3 text-2xl font-bold">Countryside / BlowPay</h3>
+                <p className="mt-1 font-semibold text-white/70">
+                  Frontend Development & Digital Operations
+                </p>
+                <p className="mt-5 leading-7 text-white/75">
+                  Support responsive product interfaces, digital processes and
+                  operational improvements while collaborating across business and
+                  technical requirements.
+                </p>
+              </article>
+
+              <article className="rounded-3xl border border-white/15 bg-white/5 p-6 sm:p-8">
+                <p className="text-sm font-bold uppercase tracking-wider text-yellow-400">
+                  May 2025 – November 2025
+                </p>
+                <h3 className="mt-3 text-2xl font-bold">The Curve Africa</h3>
+                <p className="mt-1 font-semibold text-white/70">Frontend Developer</p>
+                <p className="mt-5 leading-7 text-white/75">
+                  Built and refined responsive web experiences, worked with APIs and
+                  translated interface designs into accessible, reusable components.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="skills" className="bg-white py-20 sm:py-24">
+          <div className="portfolio-container min-w-0 max-w-full">
+            <div className="text-center">
+              <p className="section-label">Skills and tools</p>
+              <h2 className="section-title">A practical, connected toolkit</h2>
+              <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-slate-700">
+                I combine automation, frontend development and operational thinking
+                to deliver complete solutions and connected workflows.
+              </p>
+            </div>
+
+            <div className="mt-12 grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-2">
+              {skillGroups.map((group, index) => {
+                const SkillIcon = [FaRobot, FaCode, FaDatabase, FaBriefcase][index];
+
+                return (
+                  <article key={group.title} className="flex min-w-0 flex-col gap-4 rounded-3xl border border-yellow-200 bg-white p-5 shadow-sm sm:flex-row sm:gap-5 sm:p-8">
+                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-yellow-500 text-2xl text-white">
+                      <SkillIcon />
+                    </span>
+                    <div className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+                      <h3 className="text-xl font-bold text-green-800 sm:text-2xl">{group.title}</h3>
+                      <p className="mt-4 leading-8 text-slate-700">
+                        {group.skills.map((skill, skillIndex) => (
+                          <React.Fragment key={skill}>
+                            <span className="font-semibold">{skill}</span>
+                            {skillIndex < group.skills.length - 1 && (
+                              <span className="mx-2 text-yellow-500">•</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="bg-[#FEEAC9] py-20 sm:py-28">
+          <div className="portfolio-container">
+            <div className="text-center">
+              <p className="section-label">Contact</p>
+              <h2 className="section-title">Get in Touch</h2>
+              <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-700">
+                Interested in discussing how my skills can benefit your team?
+                <br className="hidden sm:block" /> Reach out via the form or my contact details.
+              </p>
+            </div>
+
+            <div className="mt-12 grid min-w-0 items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+              <form className="min-w-0 rounded-2xl bg-white p-6 shadow-lg sm:p-8" onSubmit={handleSubmit(submit)}>
+                <div className="grid gap-5">
+                  <label className="font-semibold">
+                    <span className="sr-only">Name</span>
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      {...register("name", { required: "Name is required" })}
+                      className="mt-2 w-full rounded-lg border border-slate-300 p-4 outline-none focus:border-yellow-500"
+                    />
+                    {errors.name && <span className="mt-1 block text-sm text-red-600">{errors.name.message}</span>}
+                  </label>
+                  <label className="font-semibold">
+                    <span className="sr-only">Email</span>
+                    <input
+                      type="email"
+                      placeholder="Your Email"
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: { value: /^\S+@\S+\.\S+$/, message: "Enter a valid email address" },
+                      })}
+                      className="mt-2 w-full rounded-lg border border-slate-300 p-4 outline-none focus:border-yellow-500"
+                    />
+                    {errors.email && <span className="mt-1 block text-sm text-red-600">{errors.email.message}</span>}
+                  </label>
+                </div>
+
+                <label className="mt-5 block font-semibold">
+                  <span className="sr-only">Subject</span>
+                  <input
+                    type="text"
+                    placeholder="Subject"
+                    {...register("subject", { required: "Subject is required" })}
+                    className="mt-2 w-full rounded-lg border border-slate-300 p-4 outline-none focus:border-yellow-500"
+                  />
+                  {errors.subject && <span className="mt-1 block text-sm text-red-600">{errors.subject.message}</span>}
+                </label>
+
+                <label className="mt-5 block font-semibold">
+                  <span className="sr-only">Message</span>
+                  <textarea
+                    rows={6}
+                    placeholder="Your Message"
+                    {...register("message", { required: "Message is required" })}
+                    className="mt-2 w-full resize-y rounded-lg border border-slate-300 p-4 outline-none focus:border-yellow-500"
+                  />
+                  {errors.message && <span className="mt-1 block text-sm text-red-600">{errors.message.message}</span>}
+                </label>
+
+                <button type="submit" disabled={isSubmitting} className="primary-link mt-6 w-full disabled:cursor-not-allowed disabled:opacity-60">
+                  {isSubmitting ? "Sending..." : "Send message"}
+                </button>
+                {status && <p className="mt-4 text-center text-sm font-semibold text-slate-700" aria-live="polite">{status}</p>}
+              </form>
+
+              <aside className="min-w-0 text-slate-950">
+                <p className="text-lg leading-8 sm:text-xl">
+                  I’m looking forward to exploring potential opportunities and
+                  collaborations. Feel free to reach out!
+                </p>
+
+                <div className="mt-8 space-y-5 text-base sm:text-lg">
+                  <div className="flex items-start gap-4">
+                    <GrMapLocation className="mt-1 shrink-0 text-2xl text-yellow-500" aria-hidden="true" />
+                    <span>Lagos, Nigeria</span>
+                  </div>
+                  <a href="mailto:toyinsolomon4@gmail.com" className="flex items-start gap-4 transition hover:text-yellow-600">
+                    <TbMessages className="mt-1 shrink-0 text-2xl text-yellow-500" aria-hidden="true" />
+                    <span className="min-w-0 [overflow-wrap:anywhere]">toyinsolomon4@gmail.com</span>
+                  </a>
+                  <a href="tel:+2349136309700" className="flex items-start gap-4 transition hover:text-yellow-600">
+                    <FcTwoSmartphones className="mt-1 shrink-0 text-2xl" aria-hidden="true" />
+                    <span>+234 913 630 9700</span>
+                  </a>
+                </div>
+
+                <div className="mt-9 flex gap-3">
+                  <a className="account-icon" href="https://github.com/IamOluwatoyin" aria-label="GitHub profile"><FaGithub /></a>
+                  <a className="account-icon" href="https://www.linkedin.com/in/oluwatoyin-olatorera-solomon-38b6291b3" aria-label="LinkedIn profile"><FaLinkedinIn /></a>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <BackToTopButton />
     </>
   );
 };
- 
+
 export default Body;

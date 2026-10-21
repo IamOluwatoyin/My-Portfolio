@@ -1,137 +1,122 @@
 import React, { useEffect, useState } from "react";
 
-const Header = () => {
-  const navItems = [
-    { label: "Home", id: "home" },
-    { label: "About Me", id: "about-me" },
-    { label: "Projects", id: "projects" },
-    { label: "Automations", id: "automations" },
-    { label: "Skills", id: "skills" },
-    { label: "Contact", id: "contact" },
-  ];
+const navItems = [
+  { label: "Home", id: "home" },
+  { label: "About", id: "about-me" },
+  { label: "Work", id: "featured-work" },
+  { label: "Experience", id: "experience" },
+  { label: "Skills", id: "skills" },
+  { label: "Contact", id: "contact" },
+];
 
+const Header = () => {
   const [active, setActive] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   const handleNavClick = (item) => {
-    setActive(item.label);
     document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+    setActive(item.label);
+    setMenuOpen(false);
   };
 
-  const mobileNavItems = navItems.filter((item) => item.label !== "Home");
-
-  // Scroll spy + header background
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
+      const scrollPosition = window.scrollY + 140;
+      let currentSection = navItems[0];
 
-      // Close mobile menu on scroll
-      if (menuOpen) setMenuOpen(false);
-
-      const scrollPosition = window.scrollY + 120;
-      for (let item of navItems) {
+      navItems.forEach((item) => {
         const section = document.getElementById(item.id);
-        if (!section) continue;
-
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-
-        if (scrollPosition >= top && scrollPosition < top + height) {
-          setActive(item.label);
-          break;
+        if (section && section.offsetTop <= scrollPosition) {
+          currentSection = item;
         }
-      }
+      });
+      setActive(currentSection.label);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   return (
-    <div
-      className={`w-full h-16 sm:h-20 md:h-24 lg:h-24 flex items-center justify-center z-50 fixed top-0 ${
-        scrolled ? "bg-white shadow-2xl" : "bg-transparent shadow-none"
-      } transition-all duration-300`}
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled || menuOpen
+          ? "border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur"
+          : "bg-white/85 backdrop-blur-sm"
+      }`}
     >
-      <div className="w-[80%] h-20 flex items-center justify-between">
-        {/* Logo */}
-        <h1
-          className="text-2xl font-bold font-heading cursor-pointer"
-          onClick={() => {
-            document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
-            setMenuOpen(false);
-          }}
+      <div className="portfolio-container flex h-16 items-center justify-between sm:h-20">
+        <button
+          type="button"
+          onClick={() => handleNavClick(navItems[0])}
+          className="text-left text-xl font-bold font-heading sm:text-2xl"
+          aria-label="Go to the home section"
         >
-          Torera
-          <span className="text-yellow-500 hover:text-yellow-600 font-body transition-colors">
-            Codes..
-          </span>
-        </h1>
+          Torera<span className="text-yellow-500">Codes.</span>
+        </button>
 
-        {/* Desktop nav */}
-        <div className="hidden lg:flex items-center gap-8 whitespace-nowrap font-body font-semibold">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
           {navItems.map((item) => (
-            <span
-              key={item.label}
+            <button
+              key={item.id}
+              type="button"
               onClick={() => handleNavClick(item)}
-              className={`nav-span ${active === item.label ? "nav-span-active" : "nav-span-inactive"}`}
+              className={`nav-button ${
+                active === item.label ? "nav-button-active" : "nav-button-inactive"
+              }`}
             >
               {item.label}
-            </span>
+            </button>
           ))}
-        </div>
+        </nav>
 
-        {/* Hamburger for mobile */}
-        <div className="lg:hidden flex items-center">
-          <button
-            className="w-8 h-8 bg-yellow-500 flex flex-col justify-center items-center rounded cursor-pointer"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span className="w-5 h-[2px] bg-white mb-1"></span>
-            <span className="w-5 h-[2px] bg-white mb-1"></span>
-            <span className="w-5 h-[2px] bg-white"></span>
-          </button>
-        </div>
+        <button
+          type="button"
+          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg bg-yellow-500 lg:hidden"
+          onClick={() => setMenuOpen((current) => !current)}
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+        >
+          <span className={`h-0.5 w-5 bg-white transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`h-0.5 w-5 bg-white transition ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`h-0.5 w-5 bg-white transition ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+        </button>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden fixed top-0 left-0 w-full bg-white z-50 shadow-lg">
-          {/* Mobile header */}
-          <div className="h-16 sm:h-20 flex items-center justify-between px-6 border-b">
-            <h1 className="text-2xl font-bold font-body">
-              Torera
-              <span className="text-yellow-500 font-body">Codes..</span>
-            </h1>
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="text-3xl font-bold text-gray-700 hover:text-yellow-500 transition"
-            >
-              &times;
-            </button>
-          </div>
-
-          {/* Mobile links */}
-          <div className="flex flex-col">
-            {mobileNavItems.map((item) => (
-              <span
-                key={item.label}
-                onClick={() => {
-                  handleNavClick(item);
-                  setMenuOpen(false);
-                }}
-                className={`px-6 py-4 cursor-pointer font-body font-semibold transition-colors ${
-                  active === item.label ? "bg-yellow-400 text-white" : "hover:bg-yellow-100"
+        <nav
+          className="border-t border-slate-200 bg-white px-4 py-3 shadow-lg lg:hidden"
+          aria-label="Mobile navigation"
+        >
+          <div className="portfolio-container flex flex-col gap-1 px-0">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleNavClick(item)}
+                className={`rounded-xl px-4 py-3 text-left font-semibold transition ${
+                  active === item.label
+                    ? "bg-yellow-500 text-white"
+                    : "text-slate-800 hover:bg-yellow-50"
                 }`}
               >
                 {item.label}
-              </span>
+              </button>
             ))}
           </div>
-        </div>
+        </nav>
       )}
-    </div>
+    </header>
   );
 };
 
